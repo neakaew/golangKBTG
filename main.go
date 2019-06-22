@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -121,6 +122,16 @@ func deleteTodosByIdHandler(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, rs)
 	defer db.Close()
+
+}
+
+func getPort() string {
+	var port = os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		fmt.Println("No Port In Heroku" + port)
+	}
+	return ":" + port
 }
 
 func main() {
@@ -129,6 +140,6 @@ func main() {
 	r.GET("/api/todos", getTodos)
 	r.GET("/api/todos/:id", getTodosByIdHandler)
 	r.POST("/api/todos", postTodos)
-	r.DELETE("/api/seleceTodos/:id", deleteTodosByIdHandler)
-	r.Run(":3434")
+	r.DELETE("/api/deleteTodos/:id", deleteTodosByIdHandler)
+	r.Run(getPort())
 }
