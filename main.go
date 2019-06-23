@@ -14,6 +14,6 @@ func main() {
 	r.GET("/api/todoGet", schooldb.GetTodos)
 	r.GET("/api/todoGetByID/:id", schooldb.GetTodosByIdHandler)
 	r.POST("/api/todoPost", schooldb.PostTodos)
-	r.DELETE("/api/todoDelete/:id", schooldb.DeleteTodosByIdHandler)
-	r.Run(":4455")
+	r.DELETE("/api/todoDeleteByID/:id", schooldb.DeleteTodosByIdHandler)
+	r.Run(":6655")
 }

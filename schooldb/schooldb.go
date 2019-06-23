@@ -8,15 +8,11 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+
+	model "dome/school/models"
 )
 
-type Todo struct {
-	ID     int    `json:"id"`
-	Title  string `json:"title"`
-	Status string `json:"status"`
-}
-
-type todoes []Todo
+type todoes []model.Todo
 
 func GetTodos(c *gin.Context) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
@@ -37,10 +33,10 @@ func GetTodos(c *gin.Context) {
 		return
 	}
 
-	todos := []Todo{}
+	todos := []model.Todo{}
 
 	for rows.Next() {
-		t := Todo{}
+		t := model.Todo{}
 
 		err := rows.Scan(&t.ID, &t.Title, &t.Status)
 		if err != nil {
@@ -64,7 +60,7 @@ func GetTodosByIdHandler(c *gin.Context) {
 	stmt, _ := db.Prepare("SELECT id, title, status FROM todos WHERE id=$1")
 
 	row := stmt.QueryRow(id)
-	t := Todo{}
+	t := model.Todo{}
 
 	err2 := row.Scan(&t.ID, &t.Title, &t.Status)
 	if err2 != nil {
@@ -82,7 +78,7 @@ func PostTodos(c *gin.Context) {
 		return
 	}
 
-	t := &Todo{}
+	t := &model.Todo{}
 	if err := c.BindJSON(t); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
