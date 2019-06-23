@@ -27,5 +27,5 @@ func main() {
 	r.GET("/api/todoGetByID/:id", schooldb.GetTodosByIdHandler)
 	r.POST("/api/todoPost", schooldb.PostTodos)
 	r.DELETE("/api/todoDeleteByID/:id", schooldb.DeleteTodosByIdHandler)
-	r.Run(getPort())
+	r.Run(":3344")
 }
