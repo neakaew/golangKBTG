@@ -23,7 +23,7 @@ func getPort() string {
 func main() {
 	r := gin.Default()
 
-	r.GET("/", schooldb.GetTodos)
+	r.GET("/api/todos", schooldb.GetTodos)
 	r.GET("/api/todoGetByID/:id", schooldb.GetTodosByIdHandler)
 	r.POST("/api/todoPost", schooldb.PostTodos)
 	r.DELETE("/api/todoDeleteByID/:id", schooldb.DeleteTodosByIdHandler)
