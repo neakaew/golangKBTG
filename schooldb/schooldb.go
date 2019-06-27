@@ -15,7 +15,8 @@ import (
 type todoes []model.Todo
 
 func GetTodos(c *gin.Context) {
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	url := "postgres://hapwrewe:e4vyeJBrP_rqCkuvpO7ENg-g6axLkLB2@stampy.db.elephantsql.com:5432/hapwrewe"
+	db, err := sql.Open("postgres", url)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
