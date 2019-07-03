@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 
+	db1 "dome/school/database"
 	"dome/school/schooldb"
-	_ "dome/school/schooldb"
 )
 
 func getPort() string {
@@ -21,8 +22,13 @@ func getPort() string {
 }
 
 func main() {
-	r := gin.Default()
+	db, err := db1.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	defer db.Close()
+	r := gin.Default()
 	r.GET("/api/todos", schooldb.GetTodos)
 	r.GET("/api/todoGetByID/:id", schooldb.GetTodosByIdHandler)
 	r.POST("/api/todoPost", schooldb.PostTodos)
